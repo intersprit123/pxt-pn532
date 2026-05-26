@@ -39,9 +39,10 @@ namespace PN532 {
         }
 
         basic.showString(uid)
-    }
 
-    //% block="write text $data"
+        serial.writeString("NFC UID: ")
+        serial.writeLine(uid)
+    }
     export function writeText(data: string): void {
 
         basic.showString(data)
