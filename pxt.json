@@ -1,0 +1,11 @@
+{
+    "name": "pn532",
+    "description": "PN532 NFC extension for micro:bit",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "pn532.ts"
+    ],
+    "public": true
+}
