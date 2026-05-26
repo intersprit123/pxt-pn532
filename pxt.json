@@ -3,10 +3,20 @@
     "version": "0.0.1",
     "description": "PN532 NFC extension",
     "dependencies": {
-        "core": "*"
+        "core": "*",
+        "microphone": "*"
     },
     "files": [
-        "pn532.ts"
+        "pn532.ts",
+        "main.ts"
     ],
-    "public": true
+    "public": true,
+    "targetVersions": {
+        "target": "8.0.22",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
 }
