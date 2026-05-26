@@ -9,5 +9,12 @@
     "files": [
         "pn532.ts"
     ],
-    "public": true
+    "public": true,
+    "targetVersions": {
+        "target": "8.0.22",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ]
 }
