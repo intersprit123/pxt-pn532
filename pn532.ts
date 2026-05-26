@@ -42,9 +42,23 @@ namespace PN532 {
 
         serial.writeString("NFC UID: ")
         serial.writeLine(uid)
+
+        datalogger.log(
+            datalogger.createCV("NFC", uid)
+        )
     }
+
+    //% block="write text $data"
     export function writeText(data: string): void {
 
         basic.showString(data)
+    }
+
+    //% block="clear NFC logs"
+    export function clearLogs(): void {
+
+        datalogger.deleteLog()
+
+        basic.showIcon(IconNames.Yes)
     }
 }
