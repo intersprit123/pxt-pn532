@@ -1,6 +1,7 @@
 {
-    "name": "pn532",
-    "description": "PN532 NFC extension for micro:bit",
+    "name": "pxt-pn532",
+    "version": "0.0.1",
+    "description": "PN532 NFC extension",
     "dependencies": {
         "core": "*"
     },
