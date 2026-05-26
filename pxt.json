@@ -1,22 +1,13 @@
 {
     "name": "pxt-pn532",
     "version": "0.0.1",
-    "description": "PN532 NFC extension",
+    "description": "PN532 software I2C extension",
     "dependencies": {
         "core": "*",
         "datalogger": "*"
     },
     "files": [
-        "pn532.ts",
-        "main.ts"
+        "pn532.ts"
     ],
-    "public": true,
-    "targetVersions": {
-        "target": "8.0.22",
-        "targetId": "microbit"
-    },
-    "supportedTargets": [
-        "microbit"
-    ],
-    "preferredEditor": "tsprj"
+    "public": true
 }
