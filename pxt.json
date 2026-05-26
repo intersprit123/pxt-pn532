@@ -7,7 +7,16 @@
         "datalogger": "*"
     },
     "files": [
-        "pn532.ts"
+        "pn532.ts",
+        "main.ts"
     ],
-    "public": true
+    "public": true,
+    "targetVersions": {
+        "target": "8.0.22",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
 }
