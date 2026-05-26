@@ -10,11 +10,6 @@ basic.forever(function () {
 
         basic.showString(uid)
 
-        serial.writeLine("CARD UID: " + uid)
-
-    } else {
-
-        basic.showIcon(IconNames.No)
     }
 
     basic.pause(1000)

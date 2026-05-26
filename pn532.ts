@@ -3,7 +3,6 @@ namespace PN532 {
     const PN532_ADDR = 0x24
     let savedUID = ""
 
-    // Wake PN532
     //% block="initialize PN532"
     export function init(): void {
 
@@ -14,13 +13,11 @@ namespace PN532 {
         basic.pause(1000)
     }
 
-    // Read NFC UID
     //% block="scan NFC card"
     export function scanCard(): string {
 
         let uid = ""
 
-        // PN532 command buffer
         let cmd = pins.createBuffer(7)
 
         cmd[0] = 0x00
@@ -45,38 +42,33 @@ namespace PN532 {
                 uid += "0"
             }
 
-            uid += val.toString(16)
+            uid += val.toString()
         }
 
         return uid
     }
 
-    // Save UID
     //% block="save last scanned card"
     export function saveCard(): void {
 
         savedUID = scanCard()
     }
 
-    // Get Saved UID
     //% block="get saved card"
     export function getSavedCard(): string {
 
         return savedUID
     }
 
-    // Compare UID
     //% block="compare scanned with saved"
     export function compareCard(): boolean {
 
         return scanCard() == savedUID
     }
 
-    // Simple write placeholder
     //% block="write text %data"
     export function writeText(data: string): void {
 
-        serial.writeLine("Write feature experimental")
-        serial.writeLine(data)
+        basic.showString(data)
     }
 }
