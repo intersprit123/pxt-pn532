@@ -1,57 +1,104 @@
 namespace PN532 {
 
-    const PN532_ADDR = 0x24
+    let SDA = DigitalPin.P0
+    let SCL = DigitalPin.P1
+
+    function i2cDelay(): void {
+        control.waitMicros(5)
+    }
+
+    function sclHigh(): void {
+        pins.digitalWritePin(SCL, 1)
+        i2cDelay()
+    }
+
+    function sclLow(): void {
+        pins.digitalWritePin(SCL, 0)
+        i2cDelay()
+    }
+
+    function sdaHigh(): void {
+        pins.digitalWritePin(SDA, 1)
+        i2cDelay()
+    }
+
+    function sdaLow(): void {
+        pins.digitalWritePin(SDA, 0)
+        i2cDelay()
+    }
+
+    function i2cStart(): void {
+
+        sdaHigh()
+        sclHigh()
+
+        sdaLow()
+        sclLow()
+    }
+
+    function i2cStop(): void {
+
+        sdaLow()
+        sclHigh()
+
+        sdaHigh()
+    }
+
+    function writeByte(data: number): void {
+
+        for (let i = 0; i < 8; i++) {
+
+            if ((data & 0x80) != 0) {
+                sdaHigh()
+            } else {
+                sdaLow()
+            }
+
+            sclHigh()
+            sclLow()
+
+            data <<= 1
+        }
+
+        sdaHigh()
+
+        sclHigh()
+        sclLow()
+    }
 
     //% block="initialize PN532"
     export function init(): void {
 
-        let wakeup = pins.createBuffer(24)
-
-        pins.i2cWriteBuffer(PN532_ADDR, wakeup)
+        pins.digitalWritePin(SDA, 1)
+        pins.digitalWritePin(SCL, 1)
 
         basic.pause(1000)
+
+        basic.showIcon(IconNames.Happy)
     }
 
     //% block="scan NFC card"
     export function scanCard(): void {
 
-        let uid = ""
+        i2cStart()
 
-        let cmd = pins.createBuffer(7)
+        writeByte(0x48)
 
-        cmd[0] = 0x00
-        cmd[1] = 0x00
-        cmd[2] = 0xFF
-        cmd[3] = 0x04
-        cmd[4] = 0xFC
-        cmd[5] = 0xD4
-        cmd[6] = 0x4A
+        writeByte(0x00)
+        writeByte(0x00)
+        writeByte(0xFF)
+        writeByte(0x02)
+        writeByte(0xFE)
+        writeByte(0xD4)
+        writeByte(0x4A)
 
-        pins.i2cWriteBuffer(PN532_ADDR, cmd)
+        i2cStop()
 
-        basic.pause(500)
-
-        let response = pins.i2cReadBuffer(PN532_ADDR, 20)
-
-        for (let i = 13; i < 17; i++) {
-
-            uid += response[i].toString()
-        }
-
-        basic.showString(uid)
-
-        serial.writeString("NFC UID: ")
-        serial.writeLine(uid)
+        basic.showString("SCAN")
 
         datalogger.log(
-            datalogger.createCV("NFC", uid)
+            datalogger.createCV("NFC", "SCAN")
         )
-    }
-
-    //% block="write text $data"
-    export function writeText(data: string): void {
-
-        basic.showString(data)
     }
 
     //% block="clear NFC logs"
