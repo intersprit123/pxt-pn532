@@ -1,7 +1,6 @@
 namespace PN532 {
 
     const PN532_ADDR = 0x24
-    let savedUID = ""
 
     //% block="initialize PN532"
     export function init(): void {
@@ -14,7 +13,7 @@ namespace PN532 {
     }
 
     //% block="scan NFC card"
-    export function scanCard(): string {
+    export function scanCard(): void {
 
         let uid = ""
 
@@ -36,37 +35,13 @@ namespace PN532 {
 
         for (let i = 13; i < 17; i++) {
 
-            let val = response[i]
-
-            if (val < 16) {
-                uid += "0"
-            }
-
-            uid += val.toString()
+            uid += response[i].toString()
         }
 
-        return uid
+        basic.showString(uid)
     }
 
-    //% block="save last scanned card"
-    export function saveCard(): void {
-
-        savedUID = scanCard()
-    }
-
-    //% block="get saved card"
-    export function getSavedCard(): string {
-
-        return savedUID
-    }
-
-    //% block="compare scanned with saved"
-    export function compareCard(): boolean {
-
-        return scanCard() == savedUID
-    }
-
-    //% block="write text %data"
+    //% block="write text $data"
     export function writeText(data: string): void {
 
         basic.showString(data)
