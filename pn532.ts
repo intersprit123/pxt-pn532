@@ -3,6 +3,8 @@ namespace PN532 {
     let SDA = DigitalPin.P0
     let SCL = DigitalPin.P1
 
+    let storedText = ""
+
     function i2cDelay(): void {
         control.waitMicros(5)
     }
@@ -96,9 +98,32 @@ namespace PN532 {
 
         basic.showString("SCAN")
 
+        serial.writeLine("NFC scanned")
+
         datalogger.log(
             datalogger.createCV("NFC", "SCAN")
         )
+    }
+
+    //% block="write text $text"
+    export function writeText(text: string): void {
+
+        storedText = text
+
+        basic.showString(text)
+
+        serial.writeString("Stored: ")
+        serial.writeLine(text)
+
+        datalogger.log(
+            datalogger.createCV("TEXT", text)
+        )
+    }
+
+    //% block="show stored text"
+    export function showStoredText(): void {
+
+        basic.showString(storedText)
     }
 
     //% block="clear NFC logs"
